@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>〈청산별곡〉 설명 자료</title>
+  <style>
+    :root {
+      --primary: #2C5E3B;
+      --primary-light: #E8F0EA;
+      --secondary: #4A7C59;
+      --accent: #D96B27;
+      --bg: #F9FBF9;
+      --card-bg: #FFFFFF;
+      --text: #2D3748;
+      --border: #E2E8F0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 40px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+
+    /* Tab Navigation */
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      background: white;
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 1rem 1.5rem;
+      border: none;
+      background: none;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #718096;
+      cursor: pointer;
+      transition: all 0.2s;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab-btn:hover {
+      color: var(--primary);
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      background-color: var(--primary-light);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Cards & Grids */
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+
+    .card h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 0.5rem;
+    }
+
+    /* Stanza Selector & Viewer */
+    .stanza-nav {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .stanza-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--secondary);
+      border-radius: 20px;
+      background: white;
+      color: var(--secondary);
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .stanza-btn.active, .stanza-btn:hover {
+      background: var(--secondary);
+      color: white;
+    }
+
+    .stanza-box {
+      background: #F8FAFC;
+      border-left: 4px solid var(--primary);
+      padding: 1.2rem;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 1rem;
+    }
+
+    .ori-text {
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: #1A202C;
+      margin-bottom: 0.5rem;
+    }
+
+    .trans-text {
+      color: #4A5568;
+      margin-bottom: 0.5rem;
+    }
+
+    .refrain {
+      color: var(--accent);
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    .hotspot {
+      background-color: #FEFCBF;
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      border-bottom: 2px dotted #D69E2E;
+      font-weight: bold;
+    }
+
+    .hotspot:hover {
+      background-color: #F6E05E;
+    }
+
+    /* Stanza Image Container */
+    .stanza-img-container {
+      margin-top: 1.2rem;
+      text-align: center;
+      background: #FFFFFF;
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: 1px dashed var(--border);
+    }
+
+    .stanza-img-container img {
+      max-width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    }
+
+    .stanza-img-caption {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #718096;
+    }
+
+    /* Perspective Selector */
+    .perspective-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .perspective-card {
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .perspective-card:hover, .perspective-card.selected {
+      border-color: var(--primary);
+      background-color: var(--primary-light);
+    }
+
+    .perspective-card h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Quiz Styling */
+    .quiz-item {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .quiz-item p {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .quiz-opt-btn {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+    }
+
+    .quiz-opt-btn:hover {
+      background-color: #EDF2F7;
+    }
+
+    .quiz-opt-btn.correct {
+      background-color: #C6F6D5;
+      border-color: #38A169;
+      color: #22543D;
+    }
+
+    .quiz-opt-btn.wrong {
+      background-color: #FED7D7;
+      border-color: #E53E3E;
+      color: #742A2A;
+    }
+
+    .explanation-box {
+      margin-top: 0.5rem;
+      padding: 0.75rem;
+      background: #EBF8FF;
+      border-radius: 6px;
+      color: #2B6CB0;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    /* Modal Popup */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    .art-preview {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .art-preview img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>고려 속요 〈청산별곡〉 설명 자료</h1>
+    <p>원문 탐색, 다각적 주제 해석, 연행 문화 및 형성 평가</p>
+  </header>
+
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchTab('tab1')">📖 연별 본문 탐색</button>
+    <button class="tab-btn" onclick="switchTab('tab2')">🔍 3대 관점별 해석</button>
+    <button class="tab-btn" onclick="switchTab('tab3')">🎭 고려 속요 & 궁중 연행</button>
+    <button class="tab-btn" onclick="switchTab('tab4')">✍️ 형성 평가 퀴즈</button>
+  </nav>
+
+  <div class="container">
+
+    <!-- TAB 1: 연별 본문 탐색 -->
+    <section id="tab1" class="tab-content active">
+      <div class="card">
+        <h2>청산별곡 연별 탐색 (1연 ~ 8연)</h2>
+        
+        <!-- 원문 기록 자료 이미지 -->
+        <div class="art-preview" style="margin-bottom: 1.5rem;">
+          <img src="https://i.imgur.com/rR6QYGS.jpeg" alt="〈청산별곡〉 원문 기록 자료">
+          <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #718096;">
+            ▲ 〈청산별곡〉 원문
+          </p>
+        </div>
+
+        <div class="stanza-nav" id="stanzaNav"></div>
+        <div id="stanzaDisplay"></div>
+      </div>
+    </section>
+
+    <!-- TAB 2: 3대 관점별 해석 -->
+    <section id="tab2" class="tab-content">
+      <div class="card">
+        <h2>〈청산별곡〉 주제에 대한 3대 핵심 관점</h2>
+        <p style="margin-bottom: 1rem;">각 관점을 클릭하여 화자와 시어 해석의 차이를 비교해 보세요.</p>
+        
+        <div class="perspective-grid">
+          <div class="perspective-card selected" onclick="selectPerspective(0)">
+            <h3>1. 유랑민(유랑 농민)설</h3>
+            <p><strong>화자:</strong> 토지를 잃은 농민</p>
+            <p><strong>핵심:</strong> 과혹한 수탈과 전쟁으로 터전을 잃은 민중의 고독과 애한</p>
+          </div>
+          <div class="perspective-card" onclick="selectPerspective(1)">
+            <h3>2. 좌절한 지식인설</h3>
+            <p><strong>화자:</strong> 실의에 빠진 사대부</p>
+            <p><strong>핵심:</strong> 무신정권 및 정치적 은둔으로 이상을 펼치지 못하는 좌절감</p>
+          </div>
+          <div class="perspective-card" onclick="selectPerspective(2)">
+            <h3>3. 실연한 사람설</h3>
+            <p><strong>화자:</strong> 임을 잃은 여인/화자</p>
+            <p><strong>핵심:</strong> 이별의 슬픔과 고독을 잊고자 이상향으로 도피하고자 함</p>
+          </div>
+        </div>
+
+        <div id="perspectiveDetail" class="card" style="margin-top: 1.5rem; background: #F7FAFC;"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: 고려 속요 & 궁중 연행 -->
+    <section id="tab3" class="tab-content">
+      <div class="card">
+        <h2>고려 속요의 형식적 특징</h2>
+        <ul style="list-style: square; padding-left: 1.2rem; margin-bottom: 1.5rem;">
+          <li><strong>3음보 및 3·3·2조:</strong> 기본적으로 세 마디의 운율감을 이룸.</li>
+          <li><strong>분연체(분절체):</strong> 여러 개의 연(전 8연)으로 나뉘어 구성됨.</li>
+          <li><strong>후렴구 발달:</strong> '얄리얄리 얄라셩 얄라리 얄라' 등 'ㄹ', 'ㅇ' 음이 반복되어 경쾌한 음악적 효과 제공.</li>
+        </ul>
+
+        <h2>궁중 연행 문화와 가무백희</h2>
+        <p style="margin-bottom: 1rem;">
+          민간에서 부르던 속요가 고려 후기 궁중 음악으로 수용되면서, 궁중 잔치에서 여령(女伶)들의 춤, 악기 반주(가야금, 거문고, 피리, 장구 등), 대화체 연출과 처용무 등이 어우러진 대규모 공연 형태로 연행되었습니다.
+        </p>
+
+        <div class="art-preview">
+          <img src="https://i.imgur.com/UPu3uiz.jpeg" alt="부벽루연회도 세부도">
+          <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #718096;">
+            ▲ 궁중 연회 및 가무백희 연행 풍경 (부벽루연회도 세부)
+          </p>
+        </div>
+        
+        <div style="background: #EDF2F7; padding: 1rem; border-radius: 8px; margin-top: 1.5rem; margin-bottom: 1.5rem;">
+          <p><strong>참고 문헌:</strong> 구전되다가 훈민정음 창제 후 《악학궤범》, 《악장가사》, 《시용향악보》에 기록되어 전함</p>
+        </div>
+
+        <h3>🖼️ 관련 회화 자료 링크</h3>
+        <p style="margin-bottom: 1rem; color: #718096; font-size: 0.95rem;">
+          상세한 회화 자료 및 출처 내용은 아래 링크를 통해 확인하실 수 있습니다.
+        </p>
+        <div style="text-align: center;">
+          <a href="https://blog.naver.com/ohyh45/220011853135" target="_blank" style="color: var(--primary); font-weight: bold; text-decoration: underline;">[네이버 블로그 출처 및 원본 상세 보기]</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: 형성 평가 퀴즈 -->
+    <section id="tab4" class="tab-content">
+      <div class="card">
+        <h2>형성 평가 & 복습 퀴즈</h2>
+        <div id="quizContainer"></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Modal -->
+  <div id="infoModal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <h3 id="modalTitle" style="color: var(--primary); margin-bottom: 1rem;">시어 해설</h3>
+      <p id="modalBody"></p>
+    </div>
+  </div>
+
+  <script>
+    const stanzas = [
+      {
+        num: 1,
+        title: "1연: 청산에 대한 동경",
+        ori: "살어리 살어리랏다 <span class='hotspot' onclick='showInfo(\"청산\", \"화자가 고뇌하는 현실을 벗어나 도피하고자 하는 이상향/자연 공간입니다.\")'>쳥산(靑山)</span>에 살어리랏다.<br><span class='hotspot' onclick='showInfo(\"머루와 다래\", \"청산에서 얻을 수 있는 소박하고 빈약한 식물/음식입니다.\")'>멀위랑 ᄃᆞ래랑</span> 먹고 쳥산(靑山)애 살어리랏다.",
+        trans: "살겠노라 살겠노라 청산에 살겠노라 / 머루와 다래를 먹고 청산에 살겠노라",
+        refrain: "얄리얄리 얄라셩 얄라리 얄라",
+        note: "a-a-b-a 구조 및 3·3·2조 3음보 율격 형성",
+        // Imgur 직링크 사용시 https://i.imgur.com/KVw4i8E.png 로 적거나, PC/모바일 파일인 경우 '이미지파일명.jpg' 적어주시면 됩니다.
+        imageSrc: "https://i.imgur.com/m0Cxufp.jpeg", 
+        imageCaption: "▲ 1연 관련 참고 자료 (쳥산)"
+      },
+      {
+        num: 2,
+        title: "2연: 삶의 비애와 고독",
+        ori: "우러라 우러라 <span class='hotspot' onclick='showInfo(\"새\", \"화자와 동일시되는 감정이입의 대상이자 동병상련의 존재입니다.\")'>새여</span> 자고 니러 우러라 새여.<br>널라와 시름 한 나도 자고 니러 우니로라.",
+        trans: "우는구나 우는구나 새야 자고 일어나 우는구나 새야 / 너보다 시름 많은 나도 자고 일어나 우노라",
+        refrain: "얄리얄리 얄라셩 얄라리 얄라",
+        note: "삶의 시름과 슬픔에 대한 공감"
+      },
+      {
+        num: 3,
+        title: "3연: 속세에 대한 미련",
+        ori: "가던 새 가던 새 본다 믈 아래 가던 새 본다.<br><span class='hotspot' onclick='showInfo(\"잉 무든 장글란\", \"관점에 따라 이끼 묻은 쟁기(유랑민), 날이 무딘 병기(지식인), 이끼 묻은 은장도(실연자)로 해석됩니다.\")'>잉 무든 장글란</span> 가지고 믈 아래 가던 새 본다.",
+        trans: "날아가던 새 보았느냐? 물 아래(속세) 날아가던 새 보았느냐? / 이끼 묻은 쟁기(병기)를 가지고 물 아래 가던 새 보았느냐?",
+        refrain: "얄리얄리 얄라셩 얄라리 얄라",
+        note: "속세와 지나온 삶에 대한 미련과 미련의 정서"
+      },
+      {
+        num: 4,
+        title: "4연: 절망적 고독과 외로움",
+        ori: "이링공 뎌링공 ᄒᆞ야 나즈란 디내와손뎌.<br>오리도 가리도 업슨 <span class='hotspot' onclick='showInfo(\"밤\", \"올 사람도 갈 사람도 없는 극심한 고독과 절망의 시간입니다.\")'>바므란</span> ᄯᅩ 엇디 호리라.",
+        trans: "이렇게 저렇게 하여 낮 시간은 지내왔지만 / 올 사람도 갈 사람도 없는 밤은 또 어찌 지내리오",
+        refrain: "얄리얄리 얄라셩 얄라리 얄라",
+        note: "밤이라는 시간적 공간에서 느끼는 고독의 극대화"
+      },
+      {
+        num: 5,
+        title: "5연: 운명적 고독",
+        ori: "어듸라 더디던 <span class='hotspot' onclick='showInfo(\"돌\", \"누군가를 겨냥한 것이 아닌 피할 수 없는 운명적 피할 수 없는 비애/고통을 상징합니다.\")'>돌코</span> 누리라 마치던 돌코.<br>믜리도 괴리도 업시 마자셔 우니노라.",
+        trans: "어디에 던지던 돌인가? 누구를 맞히려던 돌인가? / 미워할 사람도 사랑할 사람도 없이 (돌에) 맞아서 운다",
+        refrain: "얄리얄리 얄라셩 얄라리 얄라",
+        note: "운명적인 비애와 불가피한 수난 수용"
+      },
+      {
+        num: 6,
+        title: "6연: 바다에 대한 동경",
+        ori: "살어리 살어리랏다 <span class='hotspot' onclick='showInfo(\"바다\", \"1연의 청산과 대응되는 또 다른 도피처이자 이상향입니다.\")'>바ᄅᆞ래</span> 살어리랏다.<br><span class='hotspot' onclick='showInfo(\"남은자기와 구조개\", \"1연의 머루와 다래에 대응하는 소박한 바닷가 음식입니다.\")'>ᄂᆞᄆᆞ자기 구조개랑</span> 먹고 바ᄅᆞ래 살어리랏다.",
+        trans: "살겠노라 살겠노라 바다에 살겠노라 / 나문재와 굴 조개를 먹고 바다에 살겠노라",
+        refrain: "얄리얄리 얄라셩 얄라리 얄라",
+        note: "1연의 '청산'과 대칭을 이루는 공간적 전환"
+      },
+      {
+        num: 7,
+        title: "7연: 기적을 바라는 절박함 / 유희 탐닉",
+        ori: "가다가 가다가 드로라 에졍지 가다가 드로라.<br><span class='hotspot' onclick='showInfo(\"사슴이 해금을 켬\", \"사슴 탈을 쓴 광대의 공연 모습을 보며 시름을 잊고자 하거나, 불가능한 기적이 일어나길 바라는 심정입니다.\")'>사ᄉᆞ미 지ᇝ대예 올아셔 ᄒᆡ금(奚琴)을 혀거를</span> 드로라.",
+        trans: "가다가 듣노라 외따로 떨어진 부엌을 지나가다가 듣노라 / 사슴이 장대에 올라가서 해금을 연주하는 것을 듣노라",
+        refrain: "얄리얄리 얄라셩 얄라리 얄라",
+        note: "절박한 심정 또는 연희를 통한 고뇌의 해소"
+      },
+      {
+        num: 8,
+        title: "8연: 술을 통한 괴로움의 망각",
+        ori: "가다니 ᄇᆡ브른 도긔 설진 강수를 비조라.<br><span class='hotspot' onclick='showInfo(\"누룩\", \"독한 술의 누룩이 나를 잡는다고 의인화하여 술로 시름을 잊으려는 태도를 보여줍니다.\")'>조롱곳 누로기</span> ᄆᆡ와 잡ᄉᆞ와니 내 엇디 ᄒᆞ리잇고.",
+        trans: "가다가 배 불룩한 독에 덜 익은 술을 빚는구나 / 조롱박꽃 누룩이 매워 나를 잡으니 내가 어찌하리오",
+        refrain: "얄리얄리 얄라셩 얄라리 얄라",
+        note: "술을 통한 현실 고뇌의 일시적 해소 및 체념"
+      }
+    ];
+
+    const perspectives = [
+      {
+        title: "유랑민(유랑 농민)의 관점",
+        lang: "고려 후기 권문세족의 수탈과 외세 침입으로 토지를 잃고 유랑하는 농민의 삶으로 해석합니다.",
+        items: [
+          { term: "청산 / 바다", desc: "삶의 터전에서 쫓겨나 어쩔 수 없이 도피한 유랑의 공간" },
+          { term: "잉 무든 장글란", desc: "농토를 버리고 떠나며 가져온 '이끼 묻은 쟁기'" },
+          { term: "머루 / 다래 / 구조개", desc: "유랑 생활 중 구하는 연명용 산나물과 바닷가 음식" }
+        ]
+      },
+      {
+        title: "좌절한 지식인(사대부)의 관점",
+        lang: "무신정권의 압제나 사회적 혼란 속에서 뜻을 펼치지 못하고 은둔하는 지식인의 노래로 해석합니다.",
+        items: [
+          { term: "청산 / 바다", desc: "현실 정치를 피해 은둔하고자 하는 기품 있는 이상향" },
+          { term: "잉 무든 장글란", desc: "더 이상 쓸 수 없게 된 '날이 무딘 병기(무기)'" },
+          { term: "사슴이 해금을 켬", desc: "광대의 연희를 바라보며 느끼는 환멸과 허무감" }
+        ]
+      },
+      {
+        title: "실연한 사람의 관점",
+        lang: "사랑하는 사람과의 이별 후 절망과 고독을 극복하고자 하는 가슴 아픈 정서로 해석합니다.",
+        items: [
+          { term: "청산 / 바다", desc: "실연의 상처와 슬픔을 잊기 위해 찾아가는 안식처" },
+          { term: "잉 무든 장글란", desc: "여성의 다짐이나 한이 서린 '이끼 묻은 은장도'" },
+          { term: "우러라 새여", desc: "실연의 슬픔을 함께 나누는 감정이입의 존재" }
+        ]
+      }
+    ];
+
+    const quizzes = [
+      {
+        q: "1. 고려 속요의 일반적인 형식적 특징이 아닌 것은?",
+        opts: ["3음보 율격", "분연체(분절체) 구조", "후렴구의 발달", "4,4조 4음보 연속체"],
+        ans: 3,
+        exp: "고려 속요는 3음보, 분연체, 후렴구 발달이 대표적 특징입니다."
+      },
+      {
+        q: "2. 3연의 '잉 무든 장글란'을 농민의 관점에서 해석할 때 가장 적절한 의미는?",
+        opts: ["이끼 묻은 은장도", "이끼 묻은 쟁기", "날이 무딘 병기", "녹슨 칼"],
+        ans: 1,
+        exp: "유랑 농민설에서는 삶의 터전을 잃고 떠나는 농민의 '이끼 묻은 쟁기'로 봅니다."
+      },
+      {
+        q: "3. 6연에서 '청산'과 대응되는 공간으로 제시된 이상향/도피처는?",
+        opts: ["들판", "바다", "강가", "부엌"],
+        ans: 1,
+        exp: "6연의 '바ᄅᆞᆯ(바다)'은 1연의 '청산'과 대응되는 공간입니다."
+      }
+    ];
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      
+      event.target.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    function renderStanzas() {
+      const nav = document.getElementById('stanzaNav');
+      stanzas.forEach((s, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `stanza-btn ${idx === 0 ? 'active' : ''}`;
+        btn.innerText = `${s.num}연`;
+        btn.onclick = () => showStanza(idx);
+        nav.appendChild(btn);
+      });
+      showStanza(0);
+    }
+
+    function showStanza(index) {
+      document.querySelectorAll('.stanza-btn').forEach((b, i) => {
+        b.classList.toggle('active', i === index);
+      });
+
+      const s = stanzas[index];
+      const display = document.getElementById('stanzaDisplay');
+      
+      let imgHTML = '';
+      if (s.imageSrc) {
+        imgHTML = `
+          <div class="stanza-img-container">
+            <img src="${s.imageSrc}" alt="${s.title} 관련 이미지" onerror="this.onerror=null; this.src='https://via.placeholder.com/600x300?text=Image+Not+Found';">
+            <p class="stanza-img-caption">${s.imageCaption || ''}</p>
+          </div>
+        `;
+      }
+
+      display.innerHTML = `
+        <div class="stanza-box">
+          <h3 style="color:var(--primary); margin-bottom:0.5rem;">${s.title}</h3>
+          <p class="ori-text">${s.ori}</p>
+          <p class="trans-text"><strong>해석:</strong> ${s.trans}</p>
+          <p class="refrain"><strong>후렴구:</strong> ${s.refrain}</p>
+          <p style="margin-top:0.5rem; font-size:0.85rem; color:#718096;">💡 <em>${s.note}</em></p>
+          ${imgHTML}
+        </div>
+      `;
+    }
+
+    function selectPerspective(idx) {
+      document.querySelectorAll('.perspective-card').forEach((c, i) => {
+        c.classList.toggle('selected', i === idx);
+      });
+
+      const p = perspectives[idx];
+      const detail = document.getElementById('perspectiveDetail');
+      let itemsHTML = p.items.map(it => `<li><strong>${it.term}:</strong> ${it.desc}</li>`).join('');
+
+      detail.innerHTML = `
+        <h3 style="color:var(--primary); margin-bottom:0.5rem;">${p.title}</h3>
+        <p style="margin-bottom:1rem;">${p.lang}</p>
+        <ul style="padding-left:1.2rem;">${itemsHTML}</ul>
+      `;
+    }
+
+    function renderQuizzes() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = quizzes.map((qz, qIdx) => `
+        <div class="quiz-item">
+          <p>${qz.q}</p>
+          <div class="quiz-options">
+            ${qz.opts.map((opt, oIdx) => `
+              <button class="quiz-opt-btn" onclick="checkAnswer(${qIdx}, ${oIdx})">${opt}</button>
+            `).join('')}
+          </div>
+          <div id="exp-${qIdx}" class="explanation-box">💡 ${qz.exp}</div>
+        </div>
+      `).join('');
+    }
+
+    function checkAnswer(qIdx, optIdx) {
+      const qz = quizzes[qIdx];
+      const expBox = document.getElementById(`exp-${qIdx}`);
+      const buttons = expBox.parentElement.querySelectorAll('.quiz-opt-btn');
+
+      buttons.forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === qz.ans) {
+          btn.classList.add('correct');
+        } else if (idx === optIdx) {
+          btn.classList.add('wrong');
+        }
+      });
+
+      expBox.style.display = 'block';
+    }
+
+    function showInfo(title, body) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalBody').innerText = body;
+      document.getElementById('infoModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('infoModal').style.display = 'none';
+    }
+
+    window.onload = () => {
+      renderStanzas();
+      selectPerspective(0);
+      renderQuizzes();
+    };
+  </script>
+</body>
+</html>
